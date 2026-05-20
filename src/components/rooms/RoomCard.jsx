@@ -20,6 +20,7 @@ export default function RoomCard({ room }) {
                 <Image
                     src={room.image}
                     alt={room.name}
+                    loading="eager"
                     height={200}
                     width={400}
                     className="w-full h-64 object-cover"

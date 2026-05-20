@@ -5,9 +5,7 @@ import { Search } from 'lucide-react';
 const RoomPage = async () => {
 
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
-        { cache: "no-store" }
-    );
+        `${process.env.NEXT_PUBLIC_API_URL}/rooms`);
 
     const rooms = await res.json();
 
