@@ -1,15 +1,11 @@
 import RoomCard from '@/components/rooms/RoomCard';
 import FiltersDrawer from '@/components/shared/FiltersDrawer';
+import { fetchRoomData } from '@/lib/roomdata';
 import { Search } from 'lucide-react';
 
 const RoomPage = async () => {
+    const rooms = await fetchRoomData();
 
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/rooms`);
-
-    const rooms = await res.json();
-
-    console.log(rooms);
 
     return (
         <section className="py-16 bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">

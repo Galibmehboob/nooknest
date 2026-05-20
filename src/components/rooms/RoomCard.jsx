@@ -84,7 +84,7 @@ export default function RoomCard({ room }) {
                 </div>
 
 
-                <Link href={`/rooms/${room.id}`}>
+                <Link href={`/rooms/${room._id}`}>
                     <button className="mt-8 w-full py-4 rounded-2xl border border-black/10 dark:border-white/10 hover:border-indigo-500 dark:hover:border-indigo-500 transition font-medium">
                         View Details
                     </button>

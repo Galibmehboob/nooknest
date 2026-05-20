@@ -5,6 +5,7 @@ import { Menu, Moon, Sun, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
+import Image from "next/image";
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
@@ -30,9 +31,14 @@ export default function Navbar() {
                 <Link href="/">
                     <motion.h1
                         whileHover={{ scale: 1.05 }}
-                        className="text-2xl font-bold bg-linear-to-r from-indigo-500 to-cyan-400 bg-clip-text text-transparent"
                     >
-                        NookNest
+                        <Image
+                            src="/logo.png"
+                            alt="NookNest Logo"
+                            height={100}
+                            width={100}
+                            className="inline-block mr-2"
+                        />
                     </motion.h1>
                 </Link>
 
