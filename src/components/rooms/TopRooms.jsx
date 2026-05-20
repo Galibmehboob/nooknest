@@ -12,7 +12,7 @@ const TopRooms = async () => {
 
                 <div className="text-center mb-14">
                     <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                        Featured Rooms
+                        TOP Rooms
                     </h2>
 
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg">
@@ -42,9 +42,11 @@ const TopRooms = async () => {
 
                             <div className="p-6">
                                 <div className="flex items-start justify-between gap-4 mb-4">
-                                    <h3 className="text-2xl font-bold line-clamp-1">
-                                        {room.name}
-                                    </h3>
+                                    <Link href={`/rooms/${room._id}`} className="flex-1 block">
+                                        <h3 className="text-2xl font-bold line-clamp-1">
+                                            {room.name}
+                                        </h3>
+                                    </Link>
 
                                     <span className="text-indigo-400 font-bold text-lg whitespace-nowrap">
                                         ${room.price}

@@ -60,6 +60,7 @@ export default function Hero() {
                     <Image
                         src="/bannar.jpg"
                         alt="Study Room"
+                        loading="eager"
                         width={600}
                         height={400}
                         className="rounded-3xl border border-white/10 shadow-2xl"

@@ -21,6 +21,18 @@ export default function Navbar() {
             name: "Rooms",
             href: "/rooms",
         },
+        {
+            name: "Add Room",
+            href: "/addRooms",
+        },
+        {
+            name: "My Listings",
+            href: "/myListings",
+        },
+        {
+            name: "My Bookings",
+            href: "/myBookings",
+        }
     ];
 
     return (
@@ -35,6 +47,7 @@ export default function Navbar() {
                         <Image
                             src="/logo.png"
                             alt="NookNest Logo"
+                            loading="eager"
                             height={100}
                             width={100}
                             className="inline-block mr-2"
@@ -48,7 +61,7 @@ export default function Navbar() {
                         <Link
                             key={link.name}
                             href={link.href}
-                            className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition"
+                            className="text-gray-700 font-bold dark:text-gray-300 hover:text-black dark:hover:text-white transition"
                         >
                             {link.name}
                         </Link>
@@ -71,13 +84,13 @@ export default function Navbar() {
                     </button>
 
                     <Link href="/login">
-                        <button className="px-5 py-2 rounded-full border border-black/10 dark:border-white/10 hover:border-indigo-500 transition">
+                        <button className="px-5 py-2 rounded-full font-semibold border border-black/10 dark:border-white/10 hover:border-indigo-500 transition">
                             Login
                         </button>
                     </Link>
 
                     <Link href="/register">
-                        <button className="px-5 py-2 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white transition">
+                        <button className="px-5 py-2 rounded-full bg-[#1f325b] hover:bg-indigo-500 text-white font-semibold transition">
                             Register
                         </button>
                     </Link>

@@ -32,9 +32,12 @@ export default function RoomCard({ room }) {
 
 
                 <div className="flex items-start justify-between gap-4">
-                    <h2 className="text-2xl font-bold">
-                        {room.name}
-                    </h2>
+
+                    <Link href={`/rooms/${room._id}`} className="flex-1 block">
+                        <h3 className="text-2xl font-bold line-clamp-1">
+                            {room.name}
+                        </h3>
+                    </Link>
 
                     <div className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm font-medium">
                         ${room.price}/hr

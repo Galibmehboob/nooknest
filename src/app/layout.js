@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/providers/ThemeProvider";
-import Hero from "@/components/home/hero/Hero";
+import { Toaster } from 'react-hot-toast';
 import Footer from "@/components/shared/footer/Footer";
 import Navbar from "@/components/shared/navbar/Navbar";
 
@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
           <Navbar></Navbar>
 
           {children}
+          <Toaster position="top-right" />
           <Footer />
         </ThemeProvider>
 

@@ -9,6 +9,7 @@ import {
     BadgeCheck,
 } from "lucide-react";
 import { fetchRoomData } from "@/lib/roomdata";
+import { Button } from "@heroui/react";
 
 const RoomsDetailPage = async ({ params }) => {
 
@@ -26,7 +27,8 @@ const RoomsDetailPage = async ({ params }) => {
 
                 <Link
                     href="/rooms"
-                    className="inline-flex items-center gap-2 text-white hover:text-indigo-400 transition mb-10"
+                    className="inline-flex items-center gap-2 px-6 py-2 text-white  hover:bg-[#1f325b]/90 
+                     rounded-2xl transition mb-10"
                 >
                     <ArrowLeft size={20} />
                     Back
@@ -35,10 +37,10 @@ const RoomsDetailPage = async ({ params }) => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
-                    {/* Left */}
+
                     <div className="lg:col-span-2">
 
-                        {/* Image */}
+
                         <div className="overflow-hidden rounded-3xl border border-white/10">
                             <Image
                                 src={room.image}
@@ -82,7 +84,7 @@ const RoomsDetailPage = async ({ params }) => {
                                 {room?.amenities?.map((item, index) => (
                                     <div
                                         key={index}
-                                        className="bg-[#111827] border border-white/10 rounded-2xl px-5 py-4 text-gray-300"
+                                        className="bg-[#111827] hover:bg-[#273553] border border-white/10 rounded-2xl px-5 py-4 text-gray-300"
                                     >
                                         {item}
                                     </div>
@@ -95,7 +97,7 @@ const RoomsDetailPage = async ({ params }) => {
                     <div className="space-y-6">
 
 
-                        <div className="bg-[#111827] border border-white/10 rounded-3xl p-8 sticky top-24">
+                        <div className="bg-[#111827] border border-white/10 rounded-3xl p-8 ">
 
                             <div className="flex items-start justify-between mb-8">
                                 <div>
@@ -129,16 +131,16 @@ const RoomsDetailPage = async ({ params }) => {
                             </div>
 
 
-                            <button className="w-full bg-indigo-500 hover:bg-indigo-600 transition-all duration-300 rounded-2xl py-4 text-lg font-semibold">
-                                <span className="flex items-center justify-center gap-2">
+                            <Link href={`/rooms/${room._id}/booknow`} className="w-full bg-indigo-500 hover:bg-indigo-600 transition-all duration-300 rounded-2xl py-4 text-lg font-semibold">
+                                <Button className="flex w-full items-center justify-center gap-2">
                                     <CalendarDays size={20} />
                                     Book Now
-                                </span>
-                            </button>
+                                </Button>
+                            </Link>
                         </div>
 
 
-                        <div className="bg-[#111827] border border-white/10 rounded-3xl p-8">
+                        <div className="bg-[#111827]  border border-white/10 rounded-3xl p-8">
 
                             <p className="text-sm uppercase tracking-widest text-gray-500 mb-6">
                                 Listed By
