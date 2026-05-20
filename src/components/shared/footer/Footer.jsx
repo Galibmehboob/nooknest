@@ -70,7 +70,7 @@ export default function Footer() {
 
                             <div className="flex items-center gap-3 hover:text-white transition">
                                 <Mail size={18} />
-                                <p>firmbiz@nooknest.com</p>
+                                <p>nooknest@gmail.com</p>
                             </div>
 
                             <div className="flex items-center gap-3 hover:text-white transition">

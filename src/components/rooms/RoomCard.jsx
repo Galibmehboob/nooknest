@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Layers3, Users, DollarSign } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function RoomCard({ room }) {
@@ -14,19 +15,21 @@ export default function RoomCard({ room }) {
             transition={{ duration: 0.3 }}
             className="rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-xl shadow-xl"
         >
-            {/* Image */}
+
             <div className="overflow-hidden">
-                <img
+                <Image
                     src={room.image}
                     alt={room.name}
+                    height={200}
+                    width={400}
                     className="w-full h-64 object-cover"
                 />
             </div>
 
-            {/* Content */}
+
             <div className="p-6">
 
-                {/* Top */}
+
                 <div className="flex items-start justify-between gap-4">
                     <h2 className="text-2xl font-bold">
                         {room.name}
@@ -37,12 +40,12 @@ export default function RoomCard({ room }) {
                     </div>
                 </div>
 
-                {/* Description */}
+
                 <p className="mt-4 text-gray-600 dark:text-gray-400 line-clamp-2">
                     {room.description}
                 </p>
 
-                {/* Info */}
+
                 <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
 
                     <div className="flex items-center gap-2">
@@ -61,7 +64,7 @@ export default function RoomCard({ room }) {
                     </div>
                 </div>
 
-                {/* Amenities */}
+
                 <div className="mt-5 flex flex-wrap gap-2">
                     {room.amenities.slice(0, 3).map((item) => (
                         <span
@@ -79,7 +82,7 @@ export default function RoomCard({ room }) {
                     )}
                 </div>
 
-                {/* Button */}
+
                 <Link href={`/rooms/${room.id}`}>
                     <button className="mt-8 w-full py-4 rounded-2xl border border-black/10 dark:border-white/10 hover:border-indigo-500 dark:hover:border-indigo-500 transition font-medium">
                         View Details
