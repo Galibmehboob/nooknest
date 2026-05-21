@@ -10,6 +10,8 @@ export const fetchRoomsData = async (filters = {}) => {
         ? `${process.env.NEXT_PUBLIC_API_URL}/rooms?${query}`
         : `${process.env.NEXT_PUBLIC_API_URL}/rooms`;
 
+
+
     const res = await fetch(url, { cache: "no-store" });
 
     return res.json();
