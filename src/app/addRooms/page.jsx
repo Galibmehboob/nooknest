@@ -1,3 +1,12 @@
+'use client';
+
+import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
+import { addRoom } from "@/lib/addRoom";
+import { useSession } from "@/lib/auth-client";
+
 const amenitiesList = [
     "Whiteboard",
     "Projector",
@@ -8,66 +17,138 @@ const amenitiesList = [
 ];
 
 const AddRoomsPage = () => {
+
+    const router = useRouter();
+
+    const { data: session } = useSession();
+
+    const [selectedAmenities, setSelectedAmenities] = useState([]);
+
+    const handleAmenities = (item) => {
+
+        if (selectedAmenities.includes(item)) {
+
+            setSelectedAmenities(
+                selectedAmenities.filter((a) => a !== item)
+            );
+
+        } else {
+
+            setSelectedAmenities([
+                ...selectedAmenities,
+                item,
+            ]);
+        }
+    };
+
+    const handleAddRoom = async (e) => {
+
+        e.preventDefault();
+
+        const form = e.target;
+
+        const roomData = {
+
+            name: form.name.value,
+            description: form.description.value,
+            image: form.image.value,
+            floor: form.floor.value,
+            capacity: parseInt(form.capacity.value),
+            price: parseFloat(form.price.value),
+
+            amenities: selectedAmenities,
+
+            bookings: 0,
+
+            ownerName: session?.user?.name,
+            ownerEmail: session?.user?.email,
+            ownerImage: session?.user?.image,
+        };
+
+        const result = await addRoom(roomData);
+
+        if (result.insertedId) {
+
+            toast.success("Room Added Successfully");
+
+            form.reset();
+
+            setSelectedAmenities([]);
+
+            router.push("/myListings");
+        }
+    };
+
     return (
         <div className="min-h-screen bg-slate-950 py-10 px-4">
             <div className="max-w-5xl mx-auto">
+
                 <h1 className="text-5xl font-bold text-white mb-3">
                     Add a New Room
                 </h1>
 
                 <p className="text-slate-400 mb-10 text-lg">
-                    Share your study room with others. You can edit or remove it any
-                    time.
+                    Share your study room with others. You can edit or remove it any time.
                 </p>
 
                 <div className="bg-slate-900 border border-indigo-500/20 rounded-3xl p-8 shadow-xl">
-                    <form className="space-y-6">
+
+                    <form
+                        onSubmit={handleAddRoom}
+                        className="space-y-6"
+                    >
 
                         <div>
                             <label className="block text-white font-medium mb-2">
                                 Room Name
                             </label>
+
                             <input
+                                name="name"
                                 type="text"
                                 placeholder="Enter room name"
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
                             />
                         </div>
-
 
                         <div>
                             <label className="block text-white font-medium mb-2">
                                 Description
                             </label>
+
                             <textarea
+                                name="description"
                                 rows={5}
                                 placeholder="Write room description..."
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
                             />
                         </div>
-
 
                         <div>
                             <label className="block text-white font-medium mb-2">
                                 Image URL
                             </label>
+
                             <input
+                                name="image"
                                 type="url"
                                 placeholder="https://..."
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
                             />
                         </div>
 
-
                         <div className="grid md:grid-cols-3 gap-5">
+
                             <div>
                                 <label className="block text-white font-medium mb-2">
                                     Floor
                                 </label>
+
                                 <input
+                                    name="floor"
                                     type="text"
                                     placeholder="e.g. 3rd Floor"
-                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
                                 />
                             </div>
 
@@ -75,10 +156,12 @@ const AddRoomsPage = () => {
                                 <label className="block text-white font-medium mb-2">
                                     Capacity
                                 </label>
+
                                 <input
+                                    name="capacity"
                                     type="number"
                                     placeholder="2"
-                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
                                 />
                             </div>
 
@@ -86,34 +169,47 @@ const AddRoomsPage = () => {
                                 <label className="block text-white font-medium mb-2">
                                     Hourly Rate ($)
                                 </label>
+
                                 <input
+                                    name="price"
                                     type="number"
                                     placeholder="5"
-                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
                                 />
                             </div>
+
                         </div>
 
-
                         <div>
-                            <h3 className="text-white font-medium mb-4">Amenities</h3>
+
+                            <h3 className="text-white font-medium mb-4">
+                                Amenities
+                            </h3>
 
                             <div className="grid md:grid-cols-3 gap-4">
+
                                 {amenitiesList.map((item) => (
+
                                     <label
                                         key={item}
-                                        className="flex items-center gap-3 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 cursor-pointer hover:border-indigo-500 transition"
+                                        className="flex items-center gap-3 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 cursor-pointer"
                                     >
+
                                         <input
                                             type="checkbox"
+                                            checked={selectedAmenities.includes(item)}
+                                            onChange={() => handleAmenities(item)}
                                             className="w-5 h-5 accent-indigo-500"
                                         />
-                                        <span className="text-white">{item}</span>
+
+                                        <span className="text-white">
+                                            {item}
+                                        </span>
+
                                     </label>
                                 ))}
                             </div>
                         </div>
-
 
                         <button
                             type="submit"
@@ -121,6 +217,7 @@ const AddRoomsPage = () => {
                         >
                             Publish Room
                         </button>
+
                     </form>
                 </div>
             </div>
