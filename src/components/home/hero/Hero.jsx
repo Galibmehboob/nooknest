@@ -42,7 +42,7 @@ export default function Hero() {
                             </button>
                         </Link>
 
-                        <Link href="/add-room">
+                        <Link href="/addRooms">
                             <button className="px-8 py-4 rounded-full border border-white/10 hover:border-indigo-500 transition font-medium">
                                 Add Your Room
                             </button>

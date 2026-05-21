@@ -1,7 +1,11 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/providers/ThemeProvider";
-import { Toaster } from 'react-hot-toast';
+// import { Toaster } from 'react-hot-toast';
+import { toast, Toaster } from "sonner";
+// import { Toaster } from "sonner";
+
+
 import Footer from "@/components/shared/footer/Footer";
 import Navbar from "@/components/shared/navbar/Navbar";
 
@@ -32,7 +36,7 @@ export default function RootLayout({ children }) {
           <Navbar></Navbar>
 
           {children}
-          <Toaster position="top-right" />
+          <Toaster />
           <Footer />
         </ThemeProvider>
 
