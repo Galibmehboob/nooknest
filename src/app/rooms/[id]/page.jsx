@@ -143,7 +143,7 @@ const RoomsDetailPage = async ({ params }) => {
                                 </div>
                             </div>
 
-                            {/* <BookNowModal room={room} /> */}
+                            <BookNowModal room={room} />
                         </div>
 
                         <div className="bg-[#111827] border border-white/10 rounded-3xl p-8">

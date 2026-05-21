@@ -26,3 +26,4 @@ export const fetchFeaturedRoomData = async () => {
 
     return data || null;
 };
+
