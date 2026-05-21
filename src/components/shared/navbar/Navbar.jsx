@@ -6,7 +6,7 @@ import { Menu, Moon, Sun, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { signOut, useSession } from "@/lib/auth-client";
 
 export default function Navbar() {
@@ -16,6 +16,7 @@ export default function Navbar() {
     const { theme, toggleTheme } = useTheme();
 
     const router = useRouter();
+    const pathname = usePathname();
 
     const { data: session, isPending } = useSession();
 
@@ -85,25 +86,25 @@ export default function Navbar() {
                 </Link>
 
                 <div className="hidden md:flex items-center gap-8">
-                    {!session
-                        ? navLinks.slice(0, 2).map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className="text-gray-700 font-bold dark:text-gray-300 hover:text-indigo-500 transition"
-                            >
-                                {link.name}
-                            </Link>
-                        ))
-                        : navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className="text-gray-700 font-bold dark:text-gray-300 hover:text-indigo-500 transition"
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                    {(!session
+                        ? navLinks.slice(0, 2)
+                        : navLinks
+                    ).map((link) => (
+                        <Link
+                            key={link.name}
+                            href={link.href}
+                            className={`relative text-gray-700 font-bold dark:text-gray-300 hover:text-indigo-500 transition pb-2 ${pathname === link.href
+                                ? "text-indigo-500"
+                                : ""
+                                }`}
+                        >
+                            {link.name}
+
+                            {pathname === link.href && (
+                                <span className="absolute left-0 -bottom-1 h-[3px] w-full rounded-full bg-indigo-500"></span>
+                            )}
+                        </Link>
+                    ))}
                 </div>
 
                 <div className="hidden md:flex items-center gap-4">
@@ -141,7 +142,6 @@ export default function Navbar() {
                                 {profileOpen && (
                                     <div className="absolute right-0 mt-3 w-72 rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl p-5 z-50">
 
-
                                         <div className="border-b border-slate-700 pb-4">
                                             <h3 className="text-white font-semibold text-lg">
                                                 {session?.user?.name}
@@ -151,7 +151,6 @@ export default function Navbar() {
                                                 {session?.user?.email}
                                             </p>
                                         </div>
-
 
                                         <div className="flex flex-col gap-2 mt-4">
 
@@ -231,7 +230,10 @@ export default function Navbar() {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-gray-700 dark:text-gray-300 hover:text-indigo-500"
+                                className={`text-gray-700 dark:text-gray-300 hover:text-indigo-500 ${pathname === link.href
+                                    ? "text-indigo-500"
+                                    : ""
+                                    }`}
                                 onClick={() => setOpen(false)}
                             >
                                 {link.name}

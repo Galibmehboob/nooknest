@@ -12,6 +12,10 @@ const amenitiesList = [
     "Air Conditioning",
 ];
 
+
+
+
+
 const AddRoomsPage = () => {
 
     const router = useRouter();

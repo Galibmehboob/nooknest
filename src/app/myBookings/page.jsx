@@ -6,6 +6,12 @@ import { fetchBookings } from "@/lib/bookings";
 import Image from "next/image";
 import CancelBookingButton from "./CancelBookingButton";
 
+
+export const metadata = {
+    title: "Bookings",
+};
+
+
 const MyBookingsPage = async () => {
 
     const session = await auth.api.getSession({

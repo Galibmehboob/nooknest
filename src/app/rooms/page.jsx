@@ -4,6 +4,13 @@ import FiltersDrawer from '@/components/shared/FiltersDrawer';
 import { fetchRoomsData } from '@/lib/roomdata';
 import { Search } from 'lucide-react';
 
+
+
+export const metadata = {
+    title: "Rooms",
+};
+
+
 const RoomPage = async ({ searchParams }) => {
 
     const params = searchParams;
@@ -56,7 +63,7 @@ const RoomPage = async ({ searchParams }) => {
 
                             <button
                                 type="submit"
-                                className="absolute right-3 top-1/2 -translate-y-1/2"
+                                className="absolute right-3 bg-indigo-500 text-white p-2 rounded-lg top-1/2 -translate-y-1/2"
                             >
                                 <Search size={18} />
                             </button>

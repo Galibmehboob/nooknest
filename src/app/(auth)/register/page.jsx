@@ -6,6 +6,9 @@ import { toast } from "sonner";
 import { signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
+
+
+
 const RegisterPage = () => {
     const router = useRouter();
 
@@ -39,6 +42,12 @@ const RegisterPage = () => {
 
         e.target.reset();
     };
+
+    const handleGoogleLogin = () => {
+        signUp.google({
+            callbackURL: "/"
+        });
+    }
 
     return (
         <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-10">
@@ -141,6 +150,7 @@ const RegisterPage = () => {
 
 
                 <button
+                    onPress={handleGoogleLogin}
                     className="w-full flex items-center justify-center gap-3 border border-slate-700 bg-slate-950 hover:border-indigo-500 text-white py-3 rounded-xl transition"
                 >
                     <FcGoogle size={22} />
