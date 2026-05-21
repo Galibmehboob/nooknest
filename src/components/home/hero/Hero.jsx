@@ -4,10 +4,16 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Scrollbar, A11y } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
 export default function Hero() {
     return (
         <section className="relative overflow-hidden py-24 lg:py-32">
-
 
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-indigo-500/20 blur-3xl rounded-full" />
 
@@ -57,15 +63,40 @@ export default function Hero() {
                     transition={{ duration: 0.8 }}
                     className="relative"
                 >
-                    <Image
-                        src="/bannar.jpg"
-                        alt="Study Room"
-                        loading="eager"
-                        width={600}
-                        height={400}
-                        className="rounded-3xl border border-white/10 shadow-2xl"
-                    />
+                    <Swiper
+                        modules={[Autoplay, Pagination, Scrollbar, A11y]}
+                        spaceBetween={30}
+                        slidesPerView={1}
+                        loop={true}
+                        autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        }}
+                        pagination={{ clickable: true }}
+                        scrollbar={{ draggable: true }}
+                    >
+                        <SwiperSlide>
+                            <Image
+                                src="/bannar.jpg"
+                                alt="Banner 1"
+                                width={600}
+                                height={400}
+                                className="rounded-3xl border border-white/10 shadow-2xl"
+                            />
+                        </SwiperSlide>
+
+                        <SwiperSlide>
+                            <Image
+                                src="/banner.jpg"
+                                alt="Banner 2"
+                                width={600}
+                                height={400}
+                                className=" h-[400px] w-[800px] cover rounded-3xl border border-white/10 shadow-2xl"
+                            />
+                        </SwiperSlide>
+                    </Swiper>
                 </motion.div>
+
             </div>
         </section>
     );

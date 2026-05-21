@@ -1,15 +1,15 @@
-export const fetchRoomData = async () => {
+
+
+export const fetchRoomsData = async () => {
+
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
-        { cache: 'no-store' }
+        {
+            cache: 'no-store',
+        }
     );
 
-    const rooms = await res.json();
-
-    return rooms || [];
-
-    // console.log(rooms);
-
+    return res.json();
 };
 
 export const fetchFeaturedRoomData = async () => {

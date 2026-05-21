@@ -5,75 +5,95 @@ import {
     MapPin,
     Users,
     DollarSign,
-    CalendarDays,
     BadgeCheck,
 } from "lucide-react";
-import { fetchRoomData } from "@/lib/roomdata";
-import { Button } from "@heroui/react";
+
+import BookNowModal from "./BookingModal";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+
+const fetchRoomData = async (id, token) => {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/rooms/${id}`,
+        {
+            cache: "no-store",
+            headers: token
+                ? {
+                    authorization: `Bearer ${token}`,
+                }
+                : {},
+        }
+    );
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch room data");
+    }
+
+    return res.json();
+};
 
 const RoomsDetailPage = async ({ params }) => {
-
     const { id } = await params;
 
+    const h = await headers();
 
-    const rooms = await fetchRoomData();
+    const { token } = await auth.api.getToken({
+        headers: h,
+    });
 
-    const room = rooms.find((r) => r._id === id);
+    const room = await fetchRoomData(id, token);
+
+    if (!room) {
+        return (
+            <div className="text-center text-white mt-20">
+                Room not found
+            </div>
+        );
+    }
 
     return (
         <section className="min-h-screen py-14 px-4">
             <div className="max-w-7xl mx-auto">
-
-
                 <Link
                     href="/rooms"
-                    className="inline-flex items-center gap-2 px-6 py-2 text-white  hover:bg-[#1f325b]/90 
-                     rounded-2xl transition mb-10"
+                    className="inline-flex items-center gap-2 px-6 py-2 text-white hover:bg-[#1f325b]/90 rounded-2xl transition mb-10"
                 >
                     <ArrowLeft size={20} />
                     Back
                 </Link>
 
-
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-
-
                     <div className="lg:col-span-2">
-
-
                         <div className="overflow-hidden rounded-3xl border border-white/10">
                             <Image
-                                src={room.image}
-                                alt={room.name}
+                                src={room?.image || "/placeholder.jpg"}
+                                alt={room?.name || "Room"}
                                 width={1200}
                                 height={700}
                                 className="w-full h-[500px] object-cover"
                             />
                         </div>
 
-
                         <div className="mt-8">
-
                             <div className="flex items-center justify-between gap-4 flex-wrap">
                                 <h1 className="text-5xl font-bold">
-                                    {room.name}
+                                    {room?.name}
                                 </h1>
 
                                 <div className="flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-4 py-2 rounded-full">
                                     <BadgeCheck size={18} />
-                                    {room.bookings} bookings
+                                    {room?.bookings} bookings
                                 </div>
                             </div>
 
                             <p className="text-gray-400 mt-3">
-                                Listed {room.createdAt}
+                                Listed {room?.createdAt}
                             </p>
 
                             <p className="text-gray-300 text-lg leading-relaxed mt-8">
-                                {room.description}
+                                {room?.description}
                             </p>
                         </div>
-
 
                         <div className="mt-14">
                             <h2 className="text-3xl font-bold mb-6">
@@ -93,77 +113,60 @@ const RoomsDetailPage = async ({ params }) => {
                         </div>
                     </div>
 
-
                     <div className="space-y-6">
-
-
-                        <div className="bg-[#111827] border border-white/10 rounded-3xl p-8 ">
-
+                        <div className="bg-[#111827] border border-white/10 rounded-3xl p-8">
                             <div className="flex items-start justify-between mb-8">
                                 <div>
                                     <h2 className="text-5xl font-bold text-indigo-400">
-                                        ${room.price}
+                                        ${room?.price}
                                     </h2>
-
                                     <p className="text-gray-400 mt-2">
                                         per hour
                                     </p>
                                 </div>
                             </div>
 
-
                             <div className="space-y-5 mb-8">
-
                                 <div className="flex items-center gap-3 text-gray-300">
                                     <MapPin size={20} className="text-indigo-400" />
-                                    {room.floor}
+                                    {room?.floor}
                                 </div>
 
                                 <div className="flex items-center gap-3 text-gray-300">
                                     <Users size={20} className="text-indigo-400" />
-                                    Up to {room.capacity} people
+                                    Up to {room?.capacity} people
                                 </div>
 
                                 <div className="flex items-center gap-3 text-gray-300">
                                     <DollarSign size={20} className="text-indigo-400" />
-                                    {room.bookings} total bookings
+                                    {room?.bookings} total bookings
                                 </div>
                             </div>
 
-
-                            <Link href={`/rooms/${room._id}/booknow`} className="w-full bg-indigo-500 hover:bg-indigo-600 transition-all duration-300 rounded-2xl py-4 text-lg font-semibold">
-                                <Button className="flex w-full items-center justify-center gap-2">
-                                    <CalendarDays size={20} />
-                                    Book Now
-                                </Button>
-                            </Link>
+                            {/* <BookNowModal room={room} /> */}
                         </div>
 
-
-                        <div className="bg-[#111827]  border border-white/10 rounded-3xl p-8">
-
+                        <div className="bg-[#111827] border border-white/10 rounded-3xl p-8">
                             <p className="text-sm uppercase tracking-widest text-gray-500 mb-6">
                                 Listed By
                             </p>
 
                             <div className="flex items-center gap-4">
-
                                 <div className="h-16 w-16 rounded-full bg-indigo-500 flex items-center justify-center text-2xl font-bold">
                                     {room?.ownerName?.charAt(0)}
                                 </div>
 
                                 <div>
                                     <h3 className="text-2xl font-semibold">
-                                        {room.ownerName}
+                                        {room?.ownerName}
                                     </h3>
 
                                     <p className="text-gray-400">
-                                        {room.ownerEmail}
+                                        {room?.ownerEmail}
                                     </p>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

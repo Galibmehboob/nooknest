@@ -138,7 +138,7 @@ export default function Footer() {
                     </p>
 
                     <p className="text-gray-500 text-sm">
-                        Designed with Next.js & Framer Motion
+                        Designed By Dev. Galib Mehbub
                     </p>
                 </div>
             </div>

@@ -141,7 +141,7 @@ export default function Navbar() {
                                 {profileOpen && (
                                     <div className="absolute right-0 mt-3 w-72 rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl p-5 z-50">
 
-                                        {/* User Info */}
+
                                         <div className="border-b border-slate-700 pb-4">
                                             <h3 className="text-white font-semibold text-lg">
                                                 {session?.user?.name}
@@ -152,7 +152,7 @@ export default function Navbar() {
                                             </p>
                                         </div>
 
-                                        {/* Menu */}
+
                                         <div className="flex flex-col gap-2 mt-4">
 
                                             <Link

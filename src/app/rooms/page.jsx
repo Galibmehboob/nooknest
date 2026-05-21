@@ -1,7 +1,7 @@
 import FilterCard from '@/components/rooms/FilterCard';
 import RoomCard from '@/components/rooms/RoomCard';
 import FiltersDrawer from '@/components/shared/FiltersDrawer';
-import { fetchRoomData } from '@/lib/roomdata';
+import { fetchRoomsData } from '@/lib/roomdata';
 import { Search } from 'lucide-react';
 
 const RoomPage = async ({ searchParams }) => {
@@ -13,7 +13,7 @@ const RoomPage = async ({ searchParams }) => {
     const max = params?.max || '';
     const amenities = params?.amenities || '';
 
-    const rooms = await fetchRoomData({
+    const rooms = await fetchRoomsData({
         search,
         min,
         max,

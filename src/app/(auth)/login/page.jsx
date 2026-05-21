@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import { toast } from "sonner";
-import { signIn } from "@/lib/auth-client";
+import { authClient, signIn } from "@/lib/auth-client";
 
 // import { useRouter } from "next/navigation";
 
@@ -25,7 +25,11 @@ const LoginPage = () => {
             callbackURL: "/"
         });
 
-        console.log(data, error);
+        const { data: tokenData } = await authClient.token()
+        console.log(tokenData);
+
+
+        // console.log(data, error);// <=important***
         if (error) {
             toast.error(error.message, {
                 position: "top-right",
