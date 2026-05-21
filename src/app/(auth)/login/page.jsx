@@ -49,7 +49,6 @@ const LoginPage = () => {
     const handleGoogleLogin = async () => {
         await authClient.signIn.social({
             provider: "google",
-            callbackURL: "/"
         });
     };
 
@@ -138,8 +137,8 @@ const LoginPage = () => {
 
 
                 <button
-                    onPress={handleGoogleLogin}
-                    className="w-full flex items-center justify-center gap-3 border border-slate-700 bg-slate-950 hover:border-indigo-500 text-white py-3 rounded-xl transition">
+                    onClick={handleGoogleLogin}
+                    className="w-full flex items-center  cursor-pointer justify-center gap-3 border border-slate-700 bg-slate-950 hover:border-indigo-500 text-white py-3 rounded-xl transition">
                     <FcGoogle size={22} />
                     Continue with Google
                 </button>

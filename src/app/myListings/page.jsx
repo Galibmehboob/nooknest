@@ -139,7 +139,7 @@ const MyListingsPage = async () => {
                                                 className="flex-1"
                                             >
 
-                                                <button className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded-xl">
+                                                <button className="w-full bg-[#1f325b] hover:bg-indigo-600 text-white py-3 rounded-xl">
                                                     Edit
                                                 </button>
 
@@ -151,7 +151,7 @@ const MyListingsPage = async () => {
                                                 className="flex-1"
                                             >
 
-                                                <button className="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl">
+                                                <button className="w-full bg-red-300 hover:bg-red-600 text-white py-3 rounded-xl">
                                                     Delete
                                                 </button>
 

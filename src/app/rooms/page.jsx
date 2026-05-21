@@ -3,13 +3,11 @@ import RoomCard from '@/components/rooms/RoomCard';
 import FiltersDrawer from '@/components/shared/FiltersDrawer';
 import { fetchRoomsData } from '@/lib/roomdata';
 import { Search } from 'lucide-react';
-
-
+import LoadingSpinner from '../loading';
 
 export const metadata = {
     title: "Rooms",
 };
-
 
 const RoomPage = async ({ searchParams }) => {
 
@@ -25,10 +23,12 @@ const RoomPage = async ({ searchParams }) => {
         min,
         max,
         amenities,
-
     });
 
+    const loading = false;
+
     return (
+
         <section className="py-16 bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
 
             <div className="max-w-11/12 mx-auto px-4">
@@ -94,12 +94,20 @@ const RoomPage = async ({ searchParams }) => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-                            {rooms?.map((room) => (
-                                <RoomCard
-                                    key={room._id}
-                                    room={room}
-                                />
-                            ))}
+                            {
+                                loading ? (
+                                    <div className="col-span-full flex justify-center items-center py-20">
+                                        <div className="w-16 h-16 border-[5px] border-white/10 border-t-[#1f325b] rounded-full animate-spin"></div>
+                                    </div>
+                                ) : (
+                                    rooms?.map((room) => (
+                                        <RoomCard
+                                            key={room._id}
+                                            room={room}
+                                        />
+                                    ))
+                                )
+                            }
 
                         </div>
 

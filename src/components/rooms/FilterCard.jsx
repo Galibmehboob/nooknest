@@ -18,7 +18,7 @@ const FilterCard = () => {
 
             <form action="/rooms" className="space-y-8">
 
-                {/* MIN PRICE */}
+
 
                 <div>
 
@@ -35,7 +35,7 @@ const FilterCard = () => {
 
                 </div>
 
-                {/* MAX PRICE */}
+
 
                 <div>
 
@@ -52,7 +52,7 @@ const FilterCard = () => {
 
                 </div>
 
-                {/* AMENITIES */}
+
 
                 <div>
 
@@ -88,7 +88,7 @@ const FilterCard = () => {
 
                 <button
                     type="submit"
-                    className="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-3 rounded-2xl font-semibold"
+                    className="w-full bg-[#1f325b] hover:bg-cyan-600 text-white py-3 rounded-2xl font-semibold"
                 >
                     Apply Filters
                 </button>
