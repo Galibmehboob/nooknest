@@ -1,11 +1,7 @@
 'use client';
 
-import { useState } from "react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-
-import { addRoom } from "@/lib/addRoom";
-import { useSession } from "@/lib/auth-client";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const amenitiesList = [
     "Whiteboard",
@@ -20,67 +16,59 @@ const AddRoomsPage = () => {
 
     const router = useRouter();
 
-    const { data: session } = useSession();
-
     const [selectedAmenities, setSelectedAmenities] = useState([]);
 
-    const handleAmenities = (item) => {
+    const handleAmenity = (value) => {
 
-        if (selectedAmenities.includes(item)) {
+        if (selectedAmenities.includes(value)) {
 
             setSelectedAmenities(
-                selectedAmenities.filter((a) => a !== item)
+                selectedAmenities.filter(item => item !== value)
             );
 
         } else {
 
             setSelectedAmenities([
                 ...selectedAmenities,
-                item,
+                value
             ]);
         }
     };
 
-    const handleAddRoom = async (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
 
         const form = e.target;
 
         const roomData = {
-
             name: form.name.value,
             description: form.description.value,
             image: form.image.value,
             floor: form.floor.value,
             capacity: parseInt(form.capacity.value),
-            price: parseFloat(form.price.value),
-
+            price: parseInt(form.price.value),
             amenities: selectedAmenities,
-
-            bookings: 0,
-
-            ownerName: session?.user?.name,
-            ownerEmail: session?.user?.email,
-            ownerImage: session?.user?.image,
+            ownerEmail: 'galibmehbub11@gmail.com',
         };
 
-        const result = await addRoom(roomData);
+        await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
+            {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify(roomData),
+            }
+        );
 
-        if (result.insertedId) {
-
-            toast.success("Room Added Successfully");
-
-            form.reset();
-
-            setSelectedAmenities([]);
-
-            router.push("/myListings");
-        }
+        router.push('/myListings');
     };
 
     return (
         <div className="min-h-screen bg-slate-950 py-10 px-4">
+
             <div className="max-w-5xl mx-auto">
 
                 <h1 className="text-5xl font-bold text-white mb-3">
@@ -88,17 +76,18 @@ const AddRoomsPage = () => {
                 </h1>
 
                 <p className="text-slate-400 mb-10 text-lg">
-                    Share your study room with others. You can edit or remove it any time.
+                    Share your study room with others.
                 </p>
 
                 <div className="bg-slate-900 border border-indigo-500/20 rounded-3xl p-8 shadow-xl">
 
                     <form
-                        onSubmit={handleAddRoom}
+                        onSubmit={handleSubmit}
                         className="space-y-6"
                     >
 
                         <div>
+
                             <label className="block text-white font-medium mb-2">
                                 Room Name
                             </label>
@@ -106,12 +95,14 @@ const AddRoomsPage = () => {
                             <input
                                 name="name"
                                 type="text"
-                                placeholder="Enter room name"
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
+                                required
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
                             />
+
                         </div>
 
                         <div>
+
                             <label className="block text-white font-medium mb-2">
                                 Description
                             </label>
@@ -119,12 +110,14 @@ const AddRoomsPage = () => {
                             <textarea
                                 name="description"
                                 rows={5}
-                                placeholder="Write room description..."
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
+                                required
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
                             />
+
                         </div>
 
                         <div>
+
                             <label className="block text-white font-medium mb-2">
                                 Image URL
                             </label>
@@ -132,51 +125,33 @@ const AddRoomsPage = () => {
                             <input
                                 name="image"
                                 type="url"
-                                placeholder="https://..."
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
+                                required
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
                             />
+
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-5">
 
-                            <div>
-                                <label className="block text-white font-medium mb-2">
-                                    Floor
-                                </label>
+                            <input
+                                name="floor"
+                                placeholder="Floor"
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
+                            />
 
-                                <input
-                                    name="floor"
-                                    type="text"
-                                    placeholder="e.g. 3rd Floor"
-                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
-                                />
-                            </div>
+                            <input
+                                name="capacity"
+                                type="number"
+                                placeholder="Capacity"
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
+                            />
 
-                            <div>
-                                <label className="block text-white font-medium mb-2">
-                                    Capacity
-                                </label>
-
-                                <input
-                                    name="capacity"
-                                    type="number"
-                                    placeholder="2"
-                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-white font-medium mb-2">
-                                    Hourly Rate ($)
-                                </label>
-
-                                <input
-                                    name="price"
-                                    type="number"
-                                    placeholder="5"
-                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none"
-                                />
-                            </div>
+                            <input
+                                name="price"
+                                type="number"
+                                placeholder="Price"
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
+                            />
 
                         </div>
 
@@ -197,8 +172,7 @@ const AddRoomsPage = () => {
 
                                         <input
                                             type="checkbox"
-                                            checked={selectedAmenities.includes(item)}
-                                            onChange={() => handleAmenities(item)}
+                                            onChange={() => handleAmenity(item)}
                                             className="w-5 h-5 accent-indigo-500"
                                         />
 
@@ -208,19 +182,21 @@ const AddRoomsPage = () => {
 
                                     </label>
                                 ))}
+
                             </div>
+
                         </div>
 
-                        <button
-                            type="submit"
-                            className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-8 py-3 rounded-xl transition duration-200"
-                        >
+                        <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-8 py-3 rounded-xl">
                             Publish Room
                         </button>
 
                     </form>
+
                 </div>
+
             </div>
+
         </div>
     );
 };
