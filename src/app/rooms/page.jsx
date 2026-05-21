@@ -6,7 +6,7 @@ import { Search } from 'lucide-react';
 
 const RoomPage = async ({ searchParams }) => {
 
-    const params = await searchParams;
+    const params = searchParams;
 
     const search = params?.search || '';
     const min = params?.min || '';
@@ -18,6 +18,7 @@ const RoomPage = async ({ searchParams }) => {
         min,
         max,
         amenities,
+
     });
 
     return (
@@ -44,26 +45,21 @@ const RoomPage = async ({ searchParams }) => {
                             rooms designed for productivity and collaboration.
                         </p>
 
-                        <form
-                            action="/rooms"
-                            className="mt-6 relative"
-                        >
-
+                        <form action="/rooms" className="max-w-xl mx-auto relative mb-10">
                             <input
                                 type="text"
                                 name="search"
                                 defaultValue={search}
-                                placeholder="Search study rooms..."
-                                className="w-full h-14 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl px-5 pr-14 outline-none focus:border-indigo-500 transition"
+                                placeholder="Search rooms..."
+                                className="w-full h-14 px-5 pr-14 rounded-2xl border"
                             />
 
                             <button
                                 type="submit"
-                                className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center text-white"
+                                className="absolute right-3 top-1/2 -translate-y-1/2"
                             >
                                 <Search size={18} />
                             </button>
-
                         </form>
                     </div>
                 </div>

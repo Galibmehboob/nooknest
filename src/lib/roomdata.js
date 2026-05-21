@@ -1,13 +1,16 @@
+export const fetchRoomsData = async (filters = {}) => {
 
+    const query = new URLSearchParams(
+        Object.fromEntries(
+            Object.entries(filters).filter(([_, v]) => v)
+        )
+    ).toString();
 
-export const fetchRoomsData = async () => {
+    const url = query
+        ? `${process.env.NEXT_PUBLIC_API_URL}/rooms?${query}`
+        : `${process.env.NEXT_PUBLIC_API_URL}/rooms`;
 
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
-        {
-            cache: 'no-store',
-        }
-    );
+    const res = await fetch(url, { cache: "no-store" });
 
     return res.json();
 };
