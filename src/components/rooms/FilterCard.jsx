@@ -1,87 +1,101 @@
-'use client';
+const amenitiesList = [
+    "Wi-Fi",
+    "Projector",
+    "Quiet Zone",
+    "Whiteboard",
+    "Air Conditioning",
+    "Power Outlets",
+];
 
 const FilterCard = () => {
 
     return (
-        <>
-            <div className="sticky top-28 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl p-6">
+        <div className="border rounded-3xl p-6 sticky top-24">
 
-                <div className="flex items-center justify-between">
-                    <h3 className="text-2xl font-bold">
-                        Filters
-                    </h3>
+            <h2 className="text-2xl font-bold mb-6">
+                Filters
+            </h2>
 
-                    <button
-                        className="text-sm text-red-400 hover:text-red-300 transition"
-                    >
-                        Reset
-                    </button>
+            <form action="/rooms" className="space-y-8">
+
+                {/* MIN PRICE */}
+
+                <div>
+
+                    <label className="block mb-2 font-medium">
+                        Min Price
+                    </label>
+
+                    <input
+                        type="number"
+                        name="min"
+                        placeholder="0"
+                        className="w-full border rounded-xl px-4 py-3 bg-transparent"
+                    />
+
                 </div>
 
-                <div className="mt-8">
+                {/* MAX PRICE */}
 
-                    <h4 className="font-semibold mb-5">
+                <div>
+
+                    <label className="block mb-2 font-medium">
+                        Max Price
+                    </label>
+
+                    <input
+                        type="number"
+                        name="max"
+                        placeholder="100"
+                        className="w-full border rounded-xl px-4 py-3 bg-transparent"
+                    />
+
+                </div>
+
+                {/* AMENITIES */}
+
+                <div>
+
+                    <h3 className="font-semibold mb-4">
                         Amenities
-                    </h4>
+                    </h3>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3">
 
-                        {[
-                            "Whiteboard",
-                            "Projector",
-                            "Wi-Fi",
-                            "Power Outlets",
-                            "Quiet Zone",
-                            "Air Conditioning",
-                        ].map((item) => (
+                        {amenitiesList.map((item) => (
 
                             <label
                                 key={item}
-                                className="flex items-center gap-3 cursor-pointer"
+                                className="flex items-center gap-3"
                             >
+
                                 <input
-                                    type="checkbox"
-                                    className="w-5 h-5 accent-indigo-500"
+                                    type="radio"
+                                    name="amenities"
+                                    value={item}
                                 />
 
-                                <span className="text-gray-700 dark:text-gray-300">
+                                <span>
                                     {item}
                                 </span>
+
                             </label>
                         ))}
+
                     </div>
-                </div>
 
-                <div className="mt-10">
-
-                    <h4 className="font-semibold mb-5">
-                        Hourly rate ($)
-                    </h4>
-
-                    <div className="grid grid-cols-2 gap-4">
-
-                        <input
-                            type="number"
-                            placeholder="Min"
-                            className="h-12 rounded-2xl border border-black/10 dark:border-white/10 bg-transparent px-4 outline-none focus:border-indigo-500"
-                        />
-
-                        <input
-                            type="number"
-                            placeholder="Max"
-                            className="h-12 rounded-2xl border border-black/10 dark:border-white/10 bg-transparent px-4 outline-none focus:border-indigo-500"
-                        />
-                    </div>
                 </div>
 
                 <button
-                    className="w-full mt-8 h-12 rounded-2xl bg-[#1f325b] hover:bg-indigo-500 transition text-white font-semibold"
+                    type="submit"
+                    className="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-3 rounded-2xl font-semibold"
                 >
-                    Filter Rooms
+                    Apply Filters
                 </button>
 
-            </div>
-        </>
+            </form>
+
+        </div>
     );
 };
 

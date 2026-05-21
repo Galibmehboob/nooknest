@@ -2,7 +2,7 @@ export const fetchRoomsData = async (filters = {}) => {
 
     const query = new URLSearchParams(
         Object.fromEntries(
-            Object.entries(filters).filter(([_, v]) => v)
+            Object.entries(filters).filter(([_, value]) => value)
         )
     ).toString();
 
@@ -10,9 +10,9 @@ export const fetchRoomsData = async (filters = {}) => {
         ? `${process.env.NEXT_PUBLIC_API_URL}/rooms?${query}`
         : `${process.env.NEXT_PUBLIC_API_URL}/rooms`;
 
-
-
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url, {
+        cache: "no-store",
+    });
 
     return res.json();
 };
