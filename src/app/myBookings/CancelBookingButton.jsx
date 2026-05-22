@@ -1,5 +1,6 @@
 'use client';
 
+import { Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
@@ -30,15 +31,15 @@ const CancelBookingButton = ({ booking }) => {
         <button
             onClick={handleCancel}
             disabled={booking.status === 'cancelled'}
-            className={`w-full py-3 rounded-xl font-semibold transition ${booking.status === 'cancelled'
+            className={` p-3 rounded-xl font-semibold transition ${booking.status === 'cancelled'
                 ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                : 'bg-red-500 hover:bg-red-600 text-white'
+                : 'bg-red-600 hover:bg-red-500 text-white'
                 }`}
         >
             {
                 booking.status === 'cancelled'
                     ? 'Cancelled'
-                    : 'Cancel Booking'
+                    : <Trash></Trash>
             }
         </button>
     );

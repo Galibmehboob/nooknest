@@ -1,10 +1,12 @@
 import { auth } from "@/lib/auth";
-import { ListPlus } from "lucide-react";
+import { BadgeCheck, Calendar, Clock, DollarSign, ListPlus, Timer, XCircle } from "lucide-react";
 import Link from "next/link";
 import { headers } from 'next/headers';
 import { fetchBookings } from "@/lib/bookings";
 import Image from "next/image";
 import CancelBookingButton from "./CancelBookingButton";
+import LoadingSpinner from "../loading";
+
 
 
 export const metadata = {
@@ -81,54 +83,85 @@ const MyBookingsPage = async () => {
 
                     ) : (
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                            {
-                                bookings.map((booking) => (
 
-                                    <div
-                                        key={booking._id}
-                                        className="bg-slate-900 border border-white/10 rounded-3xl overflow-hidden"
-                                    >
+                        <div className="grid grid-cols-1 gap-5">
 
+                            {bookings.map((booking) => (
+
+                                <div
+                                    key={booking._id}
+                                    className="flex flex-col md:flex-row bg-slate-950 border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition"
+                                >
+
+                                    {/* Image */}
+                                    <div className="md:w-56 w-full h-44 md:h-auto">
                                         <Image
                                             src={booking.roomImage}
                                             alt={booking.roomName}
-                                            width={500}
+                                            width={400}
                                             height={300}
-                                            className="w-full h-52 object-cover"
+                                            className="w-full h-full object-cover"
                                         />
+                                    </div>
 
-                                        <div className="p-5 space-y-3">
 
-                                            <h2 className="text-2xl font-bold text-white">
-                                                {booking.roomName}
-                                            </h2>
+                                    <div className="flex-1 p-5 flex flex-col justify-between">
 
-                                            <p className="text-slate-400">
-                                                Date: {booking.bookingDate}
-                                            </p>
 
-                                            <p className="text-slate-400">
-                                                Time: {booking.startTime} - {booking.endTime}
-                                            </p>
+                                        <div>
 
-                                            <p className="text-slate-400">
-                                                Duration: {booking.duration} Hour
-                                            </p>
+                                            <div className="flex items-start justify-between gap-3">
 
-                                            <p className="text-slate-400">
-                                                Total: ${booking.totalPrice}
-                                            </p>
+                                                <h2 className="text-lg font-semibold text-white">
+                                                    {booking.roomName}
+                                                </h2>
 
-                                            <p className="text-slate-400">
-                                                Status:
-                                                <span className={`ml-2 font-semibold ${booking.status === 'cancelled'
-                                                    ? 'text-red-400'
-                                                    : 'text-green-400'
+                                                <span className={`px-3 py-1 text-xs rounded-full border flex items-center gap-1 ${booking.status === "cancelled"
+                                                    ? "border-red-500/30 text-red-400"
+                                                    : "border-green-500/30 text-green-400"
                                                     }`}>
+                                                    {booking.status === "cancelled" ? (
+                                                        <XCircle size={14} />
+                                                    ) : (
+                                                        <BadgeCheck size={14} />
+                                                    )}
                                                     {booking.status}
                                                 </span>
+
+                                            </div>
+
+                                            <div className="mt-3 space-y-2 text-sm text-slate-400">
+
+                                                <div className="flex items-center gap-2">
+                                                    <Calendar size={16} />
+                                                    {booking.bookingDate}
+                                                </div>
+
+                                                <div className="flex items-center gap-2">
+                                                    <Clock size={16} />
+                                                    {booking.startTime} - {booking.endTime}
+                                                </div>
+
+                                                <div className="flex items-center gap-2">
+                                                    <Timer size={16} />
+                                                    {booking.duration} hour
+                                                </div>
+
+                                                <div className="flex items-center gap-2 text-slate-200 font-medium">
+                                                    <DollarSign size={16} />
+                                                    {booking.totalPrice}
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div className="mt-5 flex items-center justify-between">
+
+                                            <p className="text-xs text-slate-500">
+                                                ID: {booking._id.slice(-6)}
                                             </p>
 
                                             <CancelBookingButton booking={booking} />
@@ -136,8 +169,10 @@ const MyBookingsPage = async () => {
                                         </div>
 
                                     </div>
-                                ))
-                            }
+
+                                </div>
+
+                            ))}
 
                         </div>
                     )

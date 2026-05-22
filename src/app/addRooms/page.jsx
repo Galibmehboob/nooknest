@@ -23,17 +23,9 @@ const AddRoomsPage = () => {
     const handleAmenity = (value) => {
 
         if (selectedAmenities.includes(value)) {
-
-            setSelectedAmenities(
-                selectedAmenities.filter(item => item !== value)
-            );
-
+            setSelectedAmenities(selectedAmenities.filter(item => item !== value));
         } else {
-
-            setSelectedAmenities([
-                ...selectedAmenities,
-                value
-            ]);
+            setSelectedAmenities([...selectedAmenities, value]);
         }
     };
 
@@ -51,19 +43,17 @@ const AddRoomsPage = () => {
             capacity: parseInt(form.capacity.value),
             price: parseInt(form.price.value),
             amenities: selectedAmenities,
-            ownerEmail: session?.user?.email,
         };
 
-        await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
-            {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                },
-                body: JSON.stringify(roomData),
-            }
-        );
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/rooms`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                Authorization: `Bearer ${session?.token}`,
+            },
+            body: JSON.stringify(roomData),
+        });
+
         router.push('/myListings');
     };
 
@@ -82,109 +72,38 @@ const AddRoomsPage = () => {
 
                 <div className="bg-slate-900 border border-indigo-500/20 rounded-3xl p-8 shadow-xl">
 
-                    <form
-                        onSubmit={handleSubmit}
-                        className="space-y-6"
-                    >
+                    <form onSubmit={handleSubmit} className="space-y-6">
 
-                        <div>
+                        <input name="name" required placeholder="Room Name"
+                            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white" />
 
-                            <label className="block text-white font-medium mb-2">
-                                Room Name
-                            </label>
+                        <textarea name="description" required rows={5}
+                            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white" />
 
-                            <input
-                                name="name"
-                                type="text"
-                                required
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
-                            />
-
-                        </div>
-
-                        <div>
-
-                            <label className="block text-white font-medium mb-2">
-                                Description
-                            </label>
-
-                            <textarea
-                                name="description"
-                                rows={5}
-                                required
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
-                            />
-
-                        </div>
-
-                        <div>
-
-                            <label className="block text-white font-medium mb-2">
-                                Image URL
-                            </label>
-
-                            <input
-                                name="image"
-                                type="url"
-                                required
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
-                            />
-
-                        </div>
+                        <input name="image" type="url" required placeholder="Image URL"
+                            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white" />
 
                         <div className="grid md:grid-cols-3 gap-5">
 
-                            <input
-                                name="floor"
-                                placeholder="Floor"
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
-                            />
+                            <input name="floor" placeholder="Floor"
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white" />
 
-                            <input
-                                name="capacity"
-                                type="number"
-                                placeholder="Capacity"
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
-                            />
+                            <input name="capacity" type="number" placeholder="Capacity"
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white" />
 
-                            <input
-                                name="price"
-                                type="number"
-                                placeholder="Price"
-                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white"
-                            />
+                            <input name="price" type="number" placeholder="Price"
+                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white" />
 
                         </div>
 
-                        <div>
+                        <div className="grid md:grid-cols-3 gap-4">
 
-                            <h3 className="text-white font-medium mb-4">
-                                Amenities
-                            </h3>
-
-                            <div className="grid md:grid-cols-3 gap-4">
-
-                                {amenitiesList.map((item) => (
-
-                                    <label
-                                        key={item}
-                                        className="flex items-center gap-3 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 cursor-pointer"
-                                    >
-
-                                        <input
-                                            type="checkbox"
-                                            onChange={() => handleAmenity(item)}
-                                            className="w-5 h-5 accent-indigo-500"
-                                        />
-
-                                        <span className="text-white">
-                                            {item}
-                                        </span>
-
-                                    </label>
-                                ))}
-
-                            </div>
+                            {amenitiesList.map((item) => (
+                                <label key={item} className="flex items-center gap-3">
+                                    <input type="checkbox" onChange={() => handleAmenity(item)} />
+                                    <span className="text-white">{item}</span>
+                                </label>
+                            ))}
 
                         </div>
 
@@ -195,9 +114,7 @@ const AddRoomsPage = () => {
                     </form>
 
                 </div>
-
             </div>
-
         </div>
     );
 };
