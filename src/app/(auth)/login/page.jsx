@@ -18,30 +18,27 @@ const LoginPage = () => {
         const LogData = Object.fromEntries(formData.entries());
 
         const { data, error } = await signIn.email({
-
             email: LogData.email,
             password: LogData.password,
-
             callbackURL: "/"
         });
 
-        const { data: tokenData } = await authClient.token()
-        console.log(tokenData);
-
-
-        // console.log(data, error);// <=important***
+        // ❌ FIRST CHECK ERROR
         if (error) {
             toast.error(error.message, {
                 position: "top-right",
             });
-
             return;
+        }
+
+        // ✅ SAFE TOKEN SAVE (ONLY IF EXISTS)
+        if (data?.token) {
+            localStorage.setItem("token", data.token);
         }
 
         toast.success("Login successful!", {
             position: "top-right",
         });
-        // router.push("/")
 
         e.target.reset();
     };
