@@ -2,7 +2,11 @@ export const fetchRoomsData = async (filters = {}) => {
 
     const query = new URLSearchParams(
         Object.fromEntries(
-            Object.entries(filters).filter(([_, value]) => value)
+            Object.entries(filters).filter(([_, value]) =>
+                value !== "" &&
+                value !== null &&
+                value !== undefined
+            )
         )
     ).toString();
 
@@ -16,7 +20,6 @@ export const fetchRoomsData = async (filters = {}) => {
 
     return res.json();
 };
-
 export const fetchFeaturedRoomData = async () => {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/featured`,

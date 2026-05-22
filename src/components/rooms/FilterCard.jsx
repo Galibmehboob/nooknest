@@ -1,3 +1,10 @@
+
+'use client'
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+
 const amenitiesList = [
     "Wi-Fi",
     "Projector",
@@ -7,7 +14,34 @@ const amenitiesList = [
     "Power Outlets",
 ];
 
+
+
+
 const FilterCard = () => {
+    const router = useRouter();
+
+
+    const handleFilter = (e) => {
+        e.preventDefault();
+
+        const form = new FormData(e.currentTarget);
+
+        const min = form.get("min");
+        const max = form.get("max");
+        const search = form.get("search");
+
+
+        const amenities = form.getAll("amenities").join(",");
+
+        const params = new URLSearchParams();
+
+        if (search) params.append("search", search);
+        if (min) params.append("min", min);
+        if (max) params.append("max", max);
+        if (amenities) params.append("amenities", amenities);
+
+        router.push(`/rooms?${params.toString()}`);
+    };
 
     return (
         <div className="border rounded-3xl p-6 sticky top-24">
@@ -16,7 +50,7 @@ const FilterCard = () => {
                 Filters
             </h2>
 
-            <form action="/rooms" className="space-y-8">
+            <form onSubmit={handleFilter} className="space-y-8">
 
 
 
@@ -70,7 +104,7 @@ const FilterCard = () => {
                             >
 
                                 <input
-                                    type="radio"
+                                    type="checkbox"
                                     name="amenities"
                                     value={item}
                                 />

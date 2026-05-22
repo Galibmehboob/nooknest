@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from '@/lib/auth-client';
 
 const amenitiesList = [
     "Whiteboard",
@@ -12,13 +13,10 @@ const amenitiesList = [
     "Air Conditioning",
 ];
 
-
-
-
-
 const AddRoomsPage = () => {
 
     const router = useRouter();
+    const { data: session } = useSession();
 
     const [selectedAmenities, setSelectedAmenities] = useState([]);
 
@@ -53,7 +51,7 @@ const AddRoomsPage = () => {
             capacity: parseInt(form.capacity.value),
             price: parseInt(form.price.value),
             amenities: selectedAmenities,
-            ownerEmail: 'galibmehbub11@gmail.com',
+            ownerEmail: session?.user?.email,
         };
 
         await fetch(
@@ -66,7 +64,6 @@ const AddRoomsPage = () => {
                 body: JSON.stringify(roomData),
             }
         );
-
         router.push('/myListings');
     };
 

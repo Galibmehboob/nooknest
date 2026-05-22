@@ -1,3 +1,5 @@
+
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,7 +14,12 @@ import BookNowModal from "./BookingModal";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+
 const fetchRoomData = async (id, token) => {
+
+
+
+
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/rooms/${id}`,
         {
@@ -33,9 +40,21 @@ const fetchRoomData = async (id, token) => {
 };
 
 const RoomsDetailPage = async ({ params }) => {
+
+
+
+
+
     const { id } = await params;
 
     const h = await headers();
+    const session = await auth.api.getSession({
+        headers: h,
+    });
+
+    // console.log(session);
+
+    const user = session?.user;
 
     const { token } = await auth.api.getToken({
         headers: h,
@@ -153,17 +172,19 @@ const RoomsDetailPage = async ({ params }) => {
 
                             <div className="flex items-center gap-4">
                                 <div className="h-16 w-16 rounded-full bg-indigo-500 flex items-center justify-center text-2xl font-bold">
-                                    {room?.ownerName?.charAt(0)}
+                                    {user?.name?.slice(0, 2)}
                                 </div>
 
                                 <div>
                                     <h3 className="text-2xl font-semibold">
-                                        {room?.ownerName}
+                                        {user?.name}
                                     </h3>
 
                                     <p className="text-gray-400">
-                                        {room?.ownerEmail}
+                                        {user?.email}
                                     </p>
+
+                                    <small>Created At: <p>{user?.createdAt?.toLocaleString()}</p></small>
                                 </div>
                             </div>
                         </div>

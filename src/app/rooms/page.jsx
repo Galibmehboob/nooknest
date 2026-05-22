@@ -11,7 +11,7 @@ export const metadata = {
 
 const RoomPage = async ({ searchParams }) => {
 
-    const params = searchParams;
+    const params = await searchParams;
 
     const search = params?.search || '';
     const min = params?.min || '';
@@ -22,7 +22,7 @@ const RoomPage = async ({ searchParams }) => {
         search,
         min,
         max,
-        amenities,
+        amenities
     });
 
     const loading = false;
