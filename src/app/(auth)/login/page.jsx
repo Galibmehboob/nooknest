@@ -23,7 +23,7 @@ const LoginPage = () => {
             callbackURL: "/"
         });
 
-        // ❌ FIRST CHECK ERROR
+
         if (error) {
             toast.error(error.message, {
                 position: "top-right",
@@ -31,7 +31,7 @@ const LoginPage = () => {
             return;
         }
 
-        // ✅ SAFE TOKEN SAVE (ONLY IF EXISTS)
+
         if (data?.token) {
             localStorage.setItem("token", data.token);
         }
